@@ -1,22 +1,24 @@
-const mongoose = require('mongoose');
-// db/db.js
+import mongoose from "mongoose";
 
 const donationSchema = new mongoose.Schema({
-    donor: String,
-    amount: Number,
-    txHash: String,
-    timestamp: { type: Date, default: Date.now },
+  donor: String,
+  amount: Number,
+  txHash: String,
+  timestamp: { type: Date, default: Date.now },
 });
 
-const DonationLog = mongoose.model('DonationLog', donationSchema);
+export const DonationLog = mongoose.models.DonationLog || mongoose.model("DonationLog", donationSchema);
 
 const charityTransferSchema = new mongoose.Schema({
-    recipient: String,
-    totalTransferred: Number,
-    txHash: String,
-    timestamp: { type: Date, default: Date.now },
+  recipient: String,
+  totalTransferred: Number,
+  txHash: String,
+  timestamp: { type: Date, default: Date.now },
 });
 
-const CharityTransfer = mongoose.model('CharityTransfer', charityTransferSchema);
+export const CharityTransfer = mongoose.models.CharityTransfer || mongoose.model("CharityTransfer", charityTransferSchema);
 
-module.exports = { DonationLog, CharityTransfer };
+export async function connectDB() {
+  if (mongoose.connection.readyState >= 1) return;
+  await mongoose.connect(process.env.MONGO_URL);
+}
