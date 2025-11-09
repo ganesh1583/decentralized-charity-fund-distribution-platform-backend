@@ -3,7 +3,6 @@ import { runCors } from "../../utils/cors.js";
 
 export default async function handler(req, res) {
   await runCors(req, res);
-  if (req.method === "OPTIONS") return res.status(200).end();
 
   if (req.method === "OPTIONS") {
     return res.status(200).end();
@@ -12,8 +11,8 @@ export default async function handler(req, res) {
   try {
     await connectDB();
 
-    const donations = await DonationLog.find();
-    const transfers = await CharityTransfer.find();
+    const donations = await DonationLog.find().sort({ timestamp: -1 });
+    const transfers = await CharityTransfer.find().sort({ timestamp: -1 });
 
     res.status(200).json({ donations, transfers });
   } catch (err) {
