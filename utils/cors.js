@@ -1,7 +1,7 @@
 import cors from "cors";
 
 const corsMiddleware = cors({
-  origin: ["https://decentralized-charity-fund-distribu-three.vercel.app"],
+  origin: ["*"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
 });
