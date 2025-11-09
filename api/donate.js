@@ -3,13 +3,24 @@ import { runCors } from "../utils/cors.js";
 
 export default async function handler(req, res) {
   try {
-    await runCors(req, res);
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
     if (req.method === "OPTIONS") return res.status(200).end();
-    if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
+
+    await runCors(req, res);
+
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Method not allowed" });
+    }
 
     await connectDB();
+
     const { donor, amount, txHash } = req.body;
-    if (!donor || !amount || !txHash) return res.status(400).json({ error: "Missing required fields" });
+    if (!donor || !amount || !txHash) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
 
     const donation = new DonationLog({ donor, amount, txHash });
     await donation.save();
