@@ -1,4 +1,4 @@
-import { runCors } from "../../utils/cors.js";
+import { runCors } from "../utils/cors.js";
 
 export default async function handler(req, res) {
   try {
