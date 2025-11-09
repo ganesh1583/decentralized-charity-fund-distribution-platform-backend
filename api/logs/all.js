@@ -1,4 +1,4 @@
-import { connectDB, DonationLog, CharityTransfer } from "../db/db.js";
+import { connectDB, DonationLog, CharityTransfer } from "../../db/db.js";
 import { runCors } from "../../utils/cors.js";
 
 export default async function handler(req, res) {
