@@ -1,6 +1,6 @@
-import Cors from "cors";
+import cors from "cors";
 
-const cors = Cors({
+const corsMiddleware = cors({
   origin: ["https://decentralized-charity-fund-distribu-three.vercel.app"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
@@ -16,5 +16,5 @@ function runMiddleware(req, res, fn) {
 }
 
 export async function runCors(req, res) {
-  await runMiddleware(req, res, cors);
+  await runMiddleware(req, res, corsMiddleware);
 }
