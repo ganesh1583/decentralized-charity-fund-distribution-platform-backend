@@ -15,10 +15,6 @@ export default async function handler(req, res) {
     const donations = await DonationLog.find();
     const transfers = await CharityTransfer.find();
 
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      "https://decentralized-charity-fund-distribu-three.vercel.app"
-    );
     res.status(200).json({ donations, transfers });
   } catch (err) {
     console.error("Error fetching logs:", err);
